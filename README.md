@@ -1,10 +1,10 @@
-# BirrGuard — Landing Page
+# PayVerify — Landing Page
 
-A responsive marketing site for BirrGuard, a payment-verification app for Ethiopian
+A responsive marketing site for **PayVerify**, a payment-verification app for Ethiopian
 merchants (QR / receipt-OCR / transaction-ID checks against CBE, TeleBirr, Awash, Dashen,
-Bank of Abyssinia, Amole, M-Pesa ET, and HelloCash).
+Bank of Abyssinia, Amole, HelloCash, and M-Pesa ET).
 
-Built with React 18 + Vite + Tailwind CSS. Charts via Recharts.
+Built with React 18 + Vite + Tailwind CSS.
 
 ## Run it locally
 
@@ -30,36 +30,39 @@ The static site is output to `dist/` — upload that folder to any static host
 ```
 src/
   components/
-    Navbar.jsx        sticky nav with mobile menu
-    Hero.jsx           headline + animated "verification stamp" phone mockup
-    TrustBar.jsx        supported banks & wallets
-    Problem.jsx         the fake-screenshot scam framing
-    HowItWorks.jsx       3-step verification flow (QR / receipt / transaction ID)
-    Analytics.jsx        stats + weekly verification chart (recharts)
-    Pricing.jsx           Starter / Business / Enterprise tiers
-    Download.jsx          APK download CTA + QR placeholder
-    Faq.jsx                accordion FAQ
-    Footer.jsx
-  data.js                 all copy/content lives here — edit this file to update
-                          pricing, FAQs, steps, or the payment-method list
-  App.jsx                 assembles the page
-  index.css               Tailwind base + a couple of small utilities
-tailwind.config.js        color, font, and animation tokens (the design system)
+    Navbar.jsx           sticky nav with mobile menu + dark/light toggle
+    Hero.jsx             headline + animated verification stamp phone mockup
+    StatsBanner.jsx      live stats counter with scroll-triggered animation
+    Features.jsx         QR scan, receipt OCR, TeleBirr/CBE, offline queue
+    AppGallery.jsx       app screenshot carousel
+    RBACSection.jsx      owner vs cashier feature comparison
+    DownloadSection.jsx  Android (APK, Galaxy Store, AppGallery, APKPure) + iOS (App Store, TestFlight)
+    Footer.jsx           contact info, links, social
+  data.js                all copy/content — pricing, features, stats, payment methods
+  hooks/
+    useCountUp.js        animated number counter hook
+    useTheme.js          dark/light mode with system preference detection
+  App.jsx                assembles the page
+  index.css              Tailwind base + custom utilities
+tailwind.config.js       color, font, and animation tokens (design system)
+vite.config.js           host 0.0.0.0 + allowedHosts for tunnel access
 ```
 
-## Things you'll likely want to swap before shipping
+## Design system
 
-- **`#download` links** in `Download.jsx` point to `#` — replace with your real
-  APK URL and QR code image once the file is hosted.
-- **Numbers in `Analytics.jsx`** and **`data.js` stats** are illustrative sample
-  data — wire them to your real backend/analytics endpoint when ready.
-- **Contact details** in `Footer.jsx` (email, phone, address) are placeholders.
-- **Google Play badge** in `Download.jsx` currently reads "in review" — update
-  once (or if) the app is published there.
+Colors and type live in `tailwind.config.js` — brand tokens: `forest`, `gold`, `obsidian`,
+`card`, `border`, `mutedForeground`. The palette matches the Flutter mobile app theme
+via CSS custom properties.
 
-## Design notes
+## Download section
 
-Colors and type live entirely in `tailwind.config.js` (`ink`, `paper`, `birr`,
-`gold`, `rust`) so the palette can be retuned in one place. The signature visual
-is the animated verification stamp in the hero phone mockup — it loops every
-~4 seconds to show the core product moment (scan → match → stamp).
+The download section auto-detects the user's platform (Android vs iOS) via user-agent and
+shows the appropriate tab. Each platform has primary and secondary download options with badges.
+
+## Customization
+
+- **Payment methods**: edit `paymentMethods` in `data.js`
+- **Features**: edit `features` in `data.js`
+- **Stats**: edit `stats` in `data.js` (wire to real API endpoints when ready)
+- **Download links**: update URLs in `downloadOptions` in `data.js`
+- **Contact/team info**: edit `team` in `data.js`
